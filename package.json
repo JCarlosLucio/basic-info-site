@@ -1,0 +1,26 @@
+{
+  "name": "basic-info-site",
+  "version": "1.0.0",
+  "description": "basic informational site",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JCarlosLucio/basic-info-site.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "JCarlosLucio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JCarlosLucio/basic-info-site/issues"
+  },
+  "homepage": "https://github.com/JCarlosLucio/basic-info-site#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
