@@ -1,38 +1,29 @@
-const http = require('http');
-const path = require('path');
-const fs = require('fs');
+const express = require('express');
+const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-const server = http.createServer((req, res) => {
-  const extname = path.extname(req.url);
+app.use(express.static(__dirname + '/public'));
 
-  const contentType = extname !== '.css' ? 'text/html' : 'text/css';
-
-  const fileName = `${req.url === '/' ? '/index' : req.url}${
-    !extname ? '.html' : ''
-  }`;
-  const filePath = path.join(__dirname, 'public', fileName);
-
-  fs.readFile(filePath, (error, content) => {
-    if (error) {
-      if (error.code === 'ENOENT') {
-        fs.readFile(
-          path.join(__dirname, 'public', '404.html'),
-          (error, content) => {
-            res.writeHead(404, { 'Content-Type': 'text/html' });
-            res.end(content);
-          }
-        );
-      } else {
-        res.writeHead(500);
-        res.end(`Server error: ${error.code}`);
-      }
-    } else {
-      res.writeHead(200, { 'Content-Type': contentType });
-      res.end(content, 'utf8');
-    }
-  });
+app.get('/', (_req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
 
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.get('/about', (_req, res) => {
+  res.sendFile(__dirname + '/about.html');
+});
+
+app.get('/contact-me', (_req, res) => {
+  res.sendFile(__dirname + '/contact-me.html');
+});
+
+app.get('/404', (_req, res) => {
+  res.sendFile(__dirname + '/404.html');
+});
+
+/** Handles unknown routes */
+app.use((_req, res, _next) => {
+  res.status(404).sendFile(__dirname + '/404.html');
+});
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
